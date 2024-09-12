@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> a;
+        vector<int> s_hash(26, 0);  
+        vector<int> p_hash(26, 0); 
+
+        int window_size = p.size();
+        int string_length = s.size();
+
+        if (string_length < window_size)
+            return a;
+
+        int l = 0, r = 0;
+        while (r < window_size) {
+            p_hash[p[r] - 'a'] += 1;
+            s_hash[s[r] - 'a'] += 1;
+            r++;
+        }
+        r--; 
+        
+        while (r < string_length) {
+            if (p_hash == s_hash) {
+                a.push_back(l); 
+            }
+            r++;
+
+            if (r != string_length)
+                s_hash[s[r] - 'a'] += 1;
+
+            s_hash[s[l] - 'a'] -= 1;
+            l++;
+        }
+
+        return a;
+    }
+    };
